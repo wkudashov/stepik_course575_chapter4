@@ -1,5 +1,7 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as COptions
+from selenium.webdriver.firefox.options import Options as FOptions
 
 
 def pytest_addoption(parser):
@@ -7,23 +9,28 @@ def pytest_addoption(parser):
                      help="chose the page language for testing")
     parser.addoption('--browser_name', action='store', default="chrome",
                      help="choose testing browser: chrome or firefox")
+    parser.addoption('--visibility', action='store', default="head",
+                     help="choose browser visibility mode: head or headless")
 
 
 @pytest.fixture()
 def browser(request):
     browser_name = request.config.getoption("browser_name")
     user_language = request.config.getoption("language")
+    visibility_mode = request.config.getoption("visibility")
     
     if browser_name == "chrome":
-        c_options = webdriver.chrome.options.Options()
-        # c_options.add_argument("--headless")
+        c_options = COptions()
+        if visibility_mode == 'headless':
+            c_options.add_argument("--headless")
         c_options.add_experimental_option('excludeSwitches', ['enable-logging'])
         c_options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
-        browser = webdriver.Chrome(options=options)
+        browser = webdriver.Chrome(options=c_options)
         
     elif browser_name == "firefox":
-        f_options = webdriver.firefox.options.Options()
-        # f_options.headless = True
+        f_options = FOptions()
+        if visibility_mode == 'headless':
+            f_options.headless = True
         profile = webdriver.FirefoxProfile()
         profile.set_preference("intl.accept_languages", user_language)
         browser = webdriver.Firefox(options=f_options, firefox_profile=profile)
