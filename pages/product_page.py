@@ -18,7 +18,8 @@ class ProductPage(BasePage):
     def should_be_item_name_in_message(self):
         item_name = self.browser.find_element(*ProductPageLocators.ITEM_NAME).text
         message_text = self.browser.find_element(*ProductPageLocators.MESSAGE_ITEM_ADDED).text
-        assert item_name in message_text, \
+        print(item_name, message_text)
+        assert item_name == message_text, \
                "Item name is not presented in item_in_basket message on Product"
 
     def should_be_basket_cost_message(self):
@@ -28,5 +29,5 @@ class ProductPage(BasePage):
     def should_be_equal_item_and_basket_costs(self):
         item_cost = self.browser.find_element(*ProductPageLocators.ITEM_COST).text
         basket_cost = self.browser.find_element(*ProductPageLocators.MESSAGE_BASKET_COST).text
-        assert item_cost in basket_cost, \
+        assert item_cost == basket_cost, \
             "Item cost is not equal to basket cost in message on Product"

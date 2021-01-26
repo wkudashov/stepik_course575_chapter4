@@ -35,17 +35,16 @@ class BasePage:
             WebDriverWait(self.browser, 5).until(e_c.alert_is_present())
             alert = self.browser.switch_to.alert
             x = alert.text.split(" ")[2]
-            print(x)
             answer = str(math.log(abs((12 * math.sin(float(x))))))
             alert.send_keys(answer)
             alert.accept()
         except TimeoutException:
             print("No first alert presented")
-        try:
-            WebDriverWait(self.browser, 5).until(e_c.alert_is_present())
-            alert = self.browser.switch_to.alert
-            alert_text = alert.text
-            print(f"Your code: {alert_text}")
-            alert.accept()
-        except TimeoutException:
-            print("No second alert presented")
+        # try:
+        #     WebDriverWait(self.browser, 5).until(e_c.alert_is_present())
+        #     alert = self.browser.switch_to.alert
+        #     alert_text = alert.text.split()
+        #     print(f"Your code: {alert_text[-1]}")
+        #     alert.accept()
+        # except TimeoutException:
+        #     print("No second alert presented")
