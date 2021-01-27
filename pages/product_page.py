@@ -15,10 +15,17 @@ class ProductPage(BasePage):
         assert self.is_element_present(*ProductPageLocators.MESSAGE_ITEM_ADDED), \
                "Item in basket message is not presented on Product"
 
+    def should_not_be_item_in_basket_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.MESSAGE_ITEM_ADDED), \
+               "Item in basket message is presented, but shouldn't on Product"
+
+    def should_disappeared_item_in_basket_message(self):
+        assert self.is_disappeared(*ProductPageLocators.MESSAGE_ITEM_ADDED), \
+               "Item in basket message is not disappeared on Product"
+
     def should_be_item_name_in_message(self):
         item_name = self.browser.find_element(*ProductPageLocators.ITEM_NAME).text
         message_text = self.browser.find_element(*ProductPageLocators.MESSAGE_ITEM_ADDED).text
-        print(item_name, message_text)
         assert item_name == message_text, \
                "Item name is not presented in item_in_basket message on Product"
 
