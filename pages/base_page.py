@@ -20,7 +20,7 @@ class BasePage:
     def should_be_login_link(self):
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
 
-    def is_element_present(self, how, what, timeout=5):
+    def is_element_present(self, how, what, timeout=7):
         try:
             WebDriverWait(self.browser, timeout).until(e_c.presence_of_element_located((how, what)))
         except TimeoutException:
@@ -44,7 +44,7 @@ class BasePage:
 
     def solve_quiz_and_get_code(self):
         try:
-            WebDriverWait(self.browser, 5).until(e_c.alert_is_present())
+            WebDriverWait(self.browser, 3).until(e_c.alert_is_present())
             alert = self.browser.switch_to.alert
             x = alert.text.split(" ")[2]
             answer = str(math.log(abs((12 * math.sin(float(x))))))
@@ -52,11 +52,22 @@ class BasePage:
             alert.accept()
         except TimeoutException:
             print("No first alert presented")
-        # try:
-        #     WebDriverWait(self.browser, 5).until(e_c.alert_is_present())
-        #     alert = self.browser.switch_to.alert
-        #     alert_text = alert.text.split()
-        #     print(f"Your code: {alert_text[-1]}")
-        #     alert.accept()
-        # except TimeoutException:
-        #     print("No second alert presented")
+        try:
+            WebDriverWait(self.browser, 3).until(e_c.alert_is_present())
+            alert = self.browser.switch_to.alert
+            alert_text = alert.text.split()
+            print(f"Your code: {alert_text[-1]}")
+            alert.accept()
+        except TimeoutException:
+            print("No second alert presented")
+
+    def should_be_basket_link(self):
+        assert self.is_element_present(*BasePageLocators.BASKET_LINK), "Basket link is not presented"
+
+    def go_to_basket_page(self):
+        link = self.browser.find_element(*BasePageLocators.BASKET_LINK)
+        link.click()
+
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), \
+            "User icon is not presented, probably unauthorised user"
