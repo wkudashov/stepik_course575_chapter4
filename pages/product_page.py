@@ -1,8 +1,5 @@
 from .base_page import BasePage
 from .locators import ProductPageLocators
-# from selenium.webdriver.support.ui import WebDriverWait
-# from selenium.webdriver.support import expected_conditions as e_c
-# from selenium.common.exceptions import TimeoutException
 
 
 class ProductPage(BasePage):
@@ -29,7 +26,6 @@ class ProductPage(BasePage):
     def should_be_item_name_in_message(self):
         item_name = self.browser.find_element(*ProductPageLocators.ITEM_NAME).text
         message_text = self.browser.find_element(*ProductPageLocators.MESSAGE_ITEM_ADDED).text
-        print('ITEM->', item_name, 'MESSAGE ->', message_text)
         assert item_name == message_text, \
                "Item name is not presented in item_in_basket message on Product"
 
@@ -41,11 +37,4 @@ class ProductPage(BasePage):
         item_cost = self.browser.find_element(*ProductPageLocators.ITEM_COST).text
         basket_cost = self.browser.find_element(*ProductPageLocators.MESSAGE_BASKET_COST).text
         assert item_cost == basket_cost, \
-            "Item cost is not equal to basket cost in message on Product"
-
-    # def waiting_for_text(self):
-    #     try:
-    #         WebDriverWait(self.browser, 10).until(e_c.text_to_be_present_in_element(ProductPageLocators.MESSAGE_ITEM_ADDED, 'Coders at Work'))
-    #     except TimeoutException:
-    #         return False
-    #     return True
+               "Item cost is not equal to basket cost in message on Product"

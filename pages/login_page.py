@@ -23,7 +23,9 @@ class LoginPage(BasePage):
                "Registration form is not presented on Login"
 
     def register_new_user(self, email, password):
-        reg_email = WebDriverWait(self.browser, 5).until(e_c.presence_of_element_located(LoginPageLocators.REGISTRATION_EMAIL))
+        reg_email = WebDriverWait(self.browser, 5).until(
+            e_c.presence_of_element_located(LoginPageLocators.REGISTRATION_EMAIL)
+        )
         reg_email.send_keys(email)
         reg_password1 = self.browser.find_element(*LoginPageLocators.REGISTRATION_PASSWORD)
         reg_password1.send_keys(password)

@@ -51,7 +51,7 @@ class BasePage:
             alert.send_keys(answer)
             alert.accept()
         except TimeoutException:
-            print("No first alert presented")
+            print("No first alert presented on Promo Page")
         try:
             WebDriverWait(self.browser, 3).until(e_c.alert_is_present())
             alert = self.browser.switch_to.alert
@@ -59,7 +59,7 @@ class BasePage:
             print(f"Your code: {alert_text[-1]}")
             alert.accept()
         except TimeoutException:
-            print("No second alert presented")
+            pass
 
     def should_be_basket_link(self):
         assert self.is_element_present(*BasePageLocators.BASKET_LINK), "Basket link is not presented"
@@ -70,4 +70,4 @@ class BasePage:
 
     def should_be_authorized_user(self):
         assert self.is_element_present(*BasePageLocators.USER_ICON), \
-            "User icon is not presented, probably unauthorised user"
+               "User icon is not presented, probably unauthorised user"
